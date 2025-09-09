@@ -1,0 +1,179 @@
+@import "tailwindcss";
+
+/* --- Tailwind v4 theme tokens (design system) --- */
+theme {
+  /* brand */
+  --color-brand-50: #e0f2fe;
+  --color-brand-200: #7dd3fc;
+  --color-brand-400: #38bdf8;
+  --color-brand-500: #0ea5e9;
+  /* primary */
+  --color-brand-600: #0284c7;
+
+  /* font */
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+/* Enable dark mode variant via a class on <html> (Tailwind docs). */
+/* Dark mode is handled by the .dark class selector below */
+
+
+/* --- Light/Dark theme tokens (used by custom utilities below) --- */
+:root {
+  /* Light */
+  --bg: #f8fafc;
+  /* slate-50 */
+  --surface: #ffffff;
+  /* white card */
+  --text: #0f172a;
+  /* slate-900 */
+  --muted: #475569;
+  /* slate-600 */
+  --border: #e2e8f0;
+  /* slate-200 */
+  --ring: var(--color-brand-500);
+}
+
+.dark {
+  /* Dark */
+  --bg: #0b1220;
+  /* deep slate/blue */
+  --surface: #0f172a;
+  /* slate-900 */
+  --text: #e5e7eb;
+  /* gray-200 */
+  --muted: #94a3b8;
+  /* slate-400 */
+  --border: #1f2937;
+  /* gray-800 */
+  --ring: var(--color-brand-400);
+}
+
+/* --- Shadows / radii / spacing --- */
+:root {
+  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+
+  body {
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: var(--bg);
+    color: var(--text);
+  }
+
+
+  /* Optional glass panel */
+  .glass {
+    background: color-mix(in oklab, var(--surface) 80%, transparent);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
+  }
+
+  /* Surfaces & utility helpers */
+  .bg-app {
+    background: var(--bg);
+  }
+
+  .surface {
+    background: var(--surface);
+  }
+
+  .text-app {
+    color: var(--text);
+  }
+
+  .text-muted {
+    color: var(--muted);
+  }
+
+  .border-base {
+    border-color: var(--border);
+  }
+
+  .ring-brand {
+    --tw-ring-color: var(--ring);
+  }
+
+  /* Modern Card Styles */
+  .card {
+    background: var(--surface);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+    border-color: color-mix(in oklab, var(--border) 60%, var(--color-brand-500));
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--color-brand-500), var(--color-brand-600));
+    color: white;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .btn-primary:hover:not(:disabled) {
+    background: linear-gradient(135deg, var(--color-brand-600), var(--color-brand-400));
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+  }
+
+  .input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: color-mix(in oklab, var(--surface) 88%, var(--bg));
+    color: var(--text);
+    font-size: 0.875rem;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .input:focus {
+    border-color: var(--ring);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring) 25%, transparent);
+    outline: none;
+    background: var(--surface);
+  }
+
+  .input::placeholder {
+    color: var(--muted);
+  }
+
+  /* Badges / Chips */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: .375rem;
+    padding: .25rem .6rem;
+    border-radius: 999px;
+    font-size: .75rem;
+    font-weight: 600;
+    background: color-mix(in oklab, var(--ring) 12%, var(--surface));
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+
+  /* Animation Classes (unchanged) */
+
+  /* Loading skeleton (unchanged) */
+
+  /* Status indicators (unchanged) */
+
+  /* Optional dotted grid background for pages */
+  .bg-grid {
+    background-image:
+      radial-gradient(circle at 1px 1px, color-mix(in oklab, var(--border) 55%, transparent) 1px, transparent 0);
+    background-size: 24px 24px;
+  }
+}
