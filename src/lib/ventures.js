@@ -7,7 +7,7 @@ import bannerDaniel     from "../assets/banners/DanielCluckinsBanner.svg";
 // (Or swap to imports from src/assets exactly like the banners.)
 const logoPerspectiv = "/assets/perspectiv.png";
 const logoGalow      = "/assets/galow.png";
-const logoDaniel     = "/assets/daniel.png";
+const logoDaniel     = "/assets/danielcluckins.png";
 
 export const VENTURES = [
   {
