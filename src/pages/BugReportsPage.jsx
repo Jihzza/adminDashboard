@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import Header from "../components/Header.jsx";
 import EmptyState from "../components/EmptyState.jsx";
 import BackHomeButton from "../components/BackHomeButton.jsx";
@@ -20,6 +21,8 @@ const FILTERS = [
 ];
 
 export default function BugReportsPage() {
+  const [searchParams] = useSearchParams();
+  const initialSource = (searchParams.get("source") || "").toLowerCase(); // "dagalow"|"perspectiv"|null
   const [filter, setFilter] = useState("all");
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState("");
@@ -27,6 +30,14 @@ export default function BugReportsPage() {
   const [ddg, setDDG] = useState([]);
   const [prs, setPRS] = useState([]);
   const [q, setQ] = useState("");
+
+  // Only run this once on mount:
+  useEffect(() => {
+    if (initialSource === "dagalow" || initialSource === "perspectiv") {
+      setFilter(initialSource); // matches your existing keys
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     let live = true;

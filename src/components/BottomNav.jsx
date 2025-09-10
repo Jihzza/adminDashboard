@@ -1,79 +1,51 @@
-import { NavLink } from "react-router-dom";
-import { Bug, Star, Calendar as CalendarIcon, Presentation, Home } from "lucide-react";
+import { NavLink, useSearchParams } from "react-router-dom";
+import { Home, Users, Bot, Calendar as CalendarIcon, User as UserIcon } from "lucide-react";
 
-const navItems = [
-  { to: "/", icon: Home, label: "Users", color: "blue" },
-  { to: "/bugs", icon: Bug, label: "Bugs", color: "red" },
-  { to: "/testimonials", icon: Star, label: "Reviews", color: "yellow" },
-  { to: "/calendar", icon: CalendarIcon, label: "Calendar", color: "green" },
-  { to: "/pitchdecks", icon: Presentation, label: "Pitch Decks", color: "purple" }
-];
+const itemBase = "flex flex-col items-center justify-center gap-1 px-3 py-2 text-xs";
+const active = "text-white";
+const inactive = "text-white/60";
 
 export default function BottomNav() {
-  const getItemStyles = (isActive, color) => {
-    const baseStyles = "group relative flex flex-col items-center justify-center gap-1 px-4 py-3 text-xs font-medium transition-all duration-200 h-14";
-
-    if (isActive) {
-      switch (color) {
-        case 'red':
-          return `${baseStyles} text-red-400 after:absolute after:top-0 after:inset-x-6 after:h-0.5 after:rounded-full after:bg-current`;
-        case 'yellow':
-          return `${baseStyles} text-yellow-400 after:absolute after:top-0 after:inset-x-6 after:h-0.5 after:rounded-full after:bg-current`;
-        case 'green':
-          return `${baseStyles} text-green-400 after:absolute after:top-0 after:inset-x-6 after:h-0.5 after:rounded-full after:bg-current`;
-        case 'purple':
-          return `${baseStyles} text-purple-400 after:absolute after:top-0 after:inset-x-6 after:h-0.5 after:rounded-full after:bg-current`;
-        default:
-          return `${baseStyles} text-blue-400 after:absolute after:top-0 after:inset-x-6 after:h-0.5 after:rounded-full after:bg-current`;
-      }
-    }
-
-    return `${baseStyles} text-muted hover:text-app`;
-  };
-
-  const getIconStyles = (isActive, color) => {
-    const baseStyles = "w-5 h-5 transition-all duration-200";
-
-    if (isActive) {
-      switch (color) {
-        case 'red':
-          return `${baseStyles} scale-110 text-red-400`;
-        case 'yellow':
-          return `${baseStyles} scale-110 text-yellow-400`;
-        case 'green':
-          return `${baseStyles} scale-110 text-green-400`;
-        case 'purple':
-          return `${baseStyles} scale-110 text-purple-400`;
-        default:
-          return `${baseStyles} scale-110 text-blue-400`;
-      }
-    }
-
-    return `${baseStyles} group-hover:scale-105 text-muted group-hover:text-app`;
-  };
+  // preserve ?source=dagalow|perspectiv when navigating
+  const [sp] = useSearchParams();
+  const source = sp.get("source");
+  const w = (path) => (source ? `${path}?source=${source}` : path);
 
   return (
-    <nav className="fixed bottom-0 inset-x-0 glass border-t border-base z-50" role="navigation" aria-label="Primary" style={{ "--nav-h": "56px" }}>
-      <div className="mx-auto max-w-7xl bg-transparent">
-        <ul className="grid grid-cols-5">
-          {navItems.map(({ to, icon: Icon, label, color }) => (
-            <li key={to}>
-              <NavLink
-                to={to}
-                className={({ isActive }) => getItemStyles(isActive, color)}
-                end={to === "/"}
-              >
-                {({ isActive }) => (
-                  <>
-                    <Icon className={getIconStyles(isActive, color)} />
-                    <span className="truncate text-app">{label}</span>
-                  </>
-                )}
-              </NavLink>
-            </li>
-          ))}
-        </ul>
-      </div>
+    <nav className="fixed bottom-0 inset-x-0 border-t border-white/10 bg-black/60 backdrop-blur z-50">
+      <ul className="mx-auto max-w-6xl grid grid-cols-5">
+        <li>
+          <NavLink to="/" className={({ isActive }) => `${itemBase} ${isActive ? active : inactive}`} end>
+            <Home className="w-6 h-6" />
+            <span>Home</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to={w("/users")} className={({ isActive }) => `${itemBase} ${isActive ? active : inactive}`} end>
+            <Users className="w-6 h-6" />
+            <span>Users</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to={w("/chatbot")} className={({ isActive }) => `${itemBase} ${isActive ? active : inactive}`} end>
+            <Bot className="w-6 h-6" />
+            <span>Chatbot</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to={w("/calendar")} className={({ isActive }) => `${itemBase} ${isActive ? active : inactive}`} end>
+            <CalendarIcon className="w-6 h-6" />
+            <span>Calendar</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to={w("/profile")} className={({ isActive }) => `${itemBase} ${isActive ? active : inactive}`} end>
+            <UserIcon className="w-6 h-6" />
+            <span>Profile</span>
+          </NavLink>
+        </li>
+      </ul>
+      {/* iOS safe-area padding to stay above the home bar */}
       <div className="h-[env(safe-area-inset-bottom)]" />
     </nav>
   );
